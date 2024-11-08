@@ -44,7 +44,7 @@ app.post('/aluno', cors(), bodyParserJSON, async function(request, response) {
 
 //endpoint listar alunos
 app.get('/aluno/:id', cors(), async function(request, response){
-    let dadosAluno = controllerAluno.listarAlunos()
+    let dadosAluno = await controllerAluno.listarAlunos()
 
     if (dadosAluno) {
         response.status(200)

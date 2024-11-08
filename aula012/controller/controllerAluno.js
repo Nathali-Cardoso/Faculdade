@@ -11,8 +11,8 @@ const inserirAluno = async function(dadosAluno) {
 }
 
 const listarAlunos = async function() {
-    //chama a função para buscar no banco de dados
-    let dados = await aluno.selectAllAlunos
+    //chama a função da model para buscar no banco de dados
+    let dados = await aluno.selectAllAlunos()
 
     if (dados)
         return dados
