@@ -43,7 +43,7 @@ app.post('/aluno', cors(), bodyParserJSON, async function(request, response) {
 })
 
 //endpoint listar alunos
-app.get('/aluno/:id', cors(), async function(request, response){
+app.get('/aluno', cors(), async function(request, response){
     let dadosAluno = await controllerAluno.listarAlunos()
 
     if (dadosAluno) {
@@ -57,7 +57,62 @@ app.get('/aluno/:id', cors(), async function(request, response){
     }
 })
 
+//endpoint buscar aluno pelo ID
+app.get('/aluno/:id', cors(), async function(request, response) {
+    let idAluno = request.params.id
 
+        // validação para verificar se o id foi informado na requisição
+    if (idAluno == '' || idAluno == undefined) {
+        response.status(400)
+        response.json({message: 'O ID deve ser informado na requisição'})
+    }
+    else {
+        //encaminha a chamada para a controller filtrar o id
+        let dadosAluno = await controllerAluno.buscarAluno(idAluno)
+
+        if (dadosAluno){
+            response.status(200)
+            response.json(dadosAluno)
+        }
+        else {
+            response.status(404)
+            response.json({message: 'O ID informado não foi encontrado no Banco de Dados'})
+        }
+    }
+})
+
+//endpoint alterar dados do aluno
+app.put('/aluno/:id', cors(), bodyParserJSON, async function(request, response){
+    let idAluno = request.params.id
+    let dados = request.body
+
+    let result = controllerAluno.atualizarAluno(dados, idAluno)
+
+    if (result) {
+        response.status(200)
+        response.json()
+    }
+    else {
+        response.status(400)
+        response.json({message: 'Não foi possível atualizar os dados no Banco de Dados'})
+    }
+})
+
+//endpoint excluir aluno
+app.delete('/aluno/:id', cors(), async function(request, response) {
+    let idAluno = request.params.id
+
+    let result = controllerAluno.excluirAluno(idAluno)
+
+    if (result) {
+        response.status(200)
+        response.json()
+    }
+    else {
+        response.status(400)
+        response.json({message: 'Não foi possível excluir o registro do Banco de Dados'})
+    }
+})
 
 app.listen(8080, function(){
     console.log('Servidor aguardando requisições na porta 8080')
