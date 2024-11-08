@@ -11,9 +11,17 @@ const inserirAluno = async function(dadosAluno) {
 }
 
 const listarAlunos = async function() {
-    let dados = aluno.
+    //chama a função para buscar no banco de dados
+    let dados = await aluno.selectAllAlunos
+
+    if (dados)
+        return dados
+
+    else
+        return false
 }
 
 module.exports = {
-    inserirAluno
+    inserirAluno, 
+    listarAlunos
 }

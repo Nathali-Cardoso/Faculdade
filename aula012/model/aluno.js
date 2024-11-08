@@ -26,6 +26,24 @@ const insertAluno = async function(dadosAluno) {
             return false
 }
 
+//Retorna todos os alunos
+const selectAllAlunos = async function() {
+    
+    //escript SQL
+    let sql = `select * from tbl_aluno`
+    
+    //Executa no banco de dados o SQL
+    let rsAluno = await prisma.$queryRawUnsafe(sql)
+    
+    if (rsAluno.length > 0) 
+        return rsAluno
+    
+    else
+    return false
+}
+
+
 module.exports = {
-    insertAluno
+    insertAluno,
+    selectAllAlunos
 }

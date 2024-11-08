@@ -44,7 +44,17 @@ app.post('/aluno', cors(), bodyParserJSON, async function(request, response) {
 
 //endpoint listar alunos
 app.get('/aluno/:id', cors(), async function(request, response){
-    controllerAluno.
+    let dadosAluno = controllerAluno.listarAlunos()
+
+    if (dadosAluno) {
+        response.status(200)
+        response.json(dadosAluno)
+    }
+    
+    else {
+        response.status(404)
+        response.json({message: 'Não foram encontrados registros no Banco de Dados'})
+    }
 })
 
 
