@@ -24,6 +24,9 @@ const bodyParserJSON = bodyParser.json()
 
 //MVC - definição de model controller e view
 
+
+//FUNÇÕES - ALUNO
+
 //endpoint inserir aluno
 app.post('/aluno', cors(), bodyParserJSON, async function(request, response) {
     let dados = request.body
@@ -113,6 +116,26 @@ app.delete('/aluno/:id', cors(), async function(request, response) {
         response.json({message: 'Não foi possível excluir o registro do Banco de Dados'})
     }
 })
+
+//FUNÇÕES DO PROFESSOR
+//endpoint inserir professor
+app.post('/professor', cors(), bodyParserJSON, async function(request, response) {
+    let dados = request.body
+
+    //encaminha os dados para controller
+    let result = await controllerProfessor.inserirProfessor(dados)
+
+    if (result){
+        response.status(201)
+        response.json()
+    }
+    else {
+        response.status(400)
+        response.json()
+    }
+        
+})
+
 
 app.listen(8080, function(){
     console.log('Servidor aguardando requisições na porta 8080')
