@@ -122,6 +122,7 @@ app.delete('/aluno/:id', cors(), async function(request, response) {
 
 
 //-- FUNÇÕES - PROFESSOR -- 
+
 //endpoint inserir professor
 app.post('/professor', cors(), bodyParserJSON, async function(request, response) {
     let dados = request.body
