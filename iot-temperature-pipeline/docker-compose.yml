@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  rabbitmq:
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - iot-network
+
+  db:
+    build: ./database
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - iot-network
+
+  producer:
+    build: ./producer
+    depends_on:
+      - rabbitmq
+    networks:
+      - iot-network
+
+  consumer:
+    build: ./consumer
+    depends_on:
+      - rabbitmq
+      - db
+    networks:
+      - iot-network
+
+networks:
+  iot-network:
+    driver: bridge
